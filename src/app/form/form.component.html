@@ -1,0 +1,17 @@
+<form [formGroup]="inputForm" (ngSubmit)="onSubmit()">
+    <div class="grid">
+        <div class="group col-12">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-clock"></i>
+            </span>
+            <p-inputMask mask="99:99:99" formControlName="time" placeholder="00:15:00"></p-inputMask>    
+          </div>
+          <div class="p-inputgroup col-12">
+            <span class="p-inputgroup-addon">
+              <i class="pi pi-plus-circle"></i>
+            </span>
+            <input type="text" pInputText placeholder="Do homework" />
+          </div>
+    </div>
+    <p-button type="ngSubmit" label="Send"></p-button>
+  </form>
