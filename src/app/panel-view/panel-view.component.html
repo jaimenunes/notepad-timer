@@ -1,0 +1,45 @@
+<div class="grid">
+    <div class="col-12">
+        <p-tabView>
+            <p-tabPanel header="Focus Time">
+                <div class="flex justify-content-center">
+                    <span class="clock-font">{{displayFocus}}</span>
+                </div>
+                <div class="flex justify-content-center">
+                    <button *ngIf="!isRunnig" pButton pRipple class="p-button-success mr-2" (click)="timer(25, 'focus')">
+                        <i class="pi pi-play" style="color: #fff;" style="font-size: 1.3rem"></i>
+                    </button>
+                    <button pButton pRipple class="p-button-danger" (click)="stop('focus')">
+                        <i class="pi pi-stop" style="color: #fff;" style="font-size: 1.3rem"></i>
+                    </button>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="Short Break">
+                <div class="flex justify-content-center">
+                    <span class="clock-font">{{displayShort}}</span>
+                </div>
+                <div class="flex justify-content-center">
+                    <button *ngIf="!isRunnig" pButton pRipple class="p-button-success mr-2" (click)="timer(5, 'short')">
+                        <i class="pi pi-play" style="color: #fff;" style="font-size: 1.3rem"></i>
+                    </button>
+                    <button pButton pRipple class="p-button-danger" (click)="stop('short')">
+                        <i class="pi pi-stop" style="color: #fff;" style="font-size: 1.3rem"></i>
+                    </button>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="Long Break">
+                <div class="flex justify-content-center">
+                    <span class="clock-font">{{displayLong}}</span>
+                </div>
+                <div class="flex justify-content-center">
+                    <button *ngIf="!isRunnig" pButton pRipple class="p-button-success mr-2" (click)="timer(15, 'long')">
+                        <i class="pi pi-play" style="color: #fff;" style="font-size: 1.3rem"></i>
+                    </button>
+                    <button pButton pRipple class="p-button-danger" (click)="stop('long')">
+                        <i class="pi pi-stop" style="color: #fff;" style="font-size: 1.3rem"></i>
+                    </button>
+                </div>
+            </p-tabPanel>
+        </p-tabView>
+    </div>
+</div>
