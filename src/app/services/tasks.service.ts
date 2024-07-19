@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable, of, race } from "rxjs"
     providedIn: 'root'
   })
 export class TaskService{
-    private tasks = new BehaviorSubject<string[]>(['test'])
+    private tasks = new BehaviorSubject<string[]>([])
     taskList$ = this.tasks.asObservable()
 
     addNewTask(task: string){
