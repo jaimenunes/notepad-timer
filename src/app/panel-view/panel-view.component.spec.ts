@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PanelViewComponent } from './panel-view.component';
+import { CommonModule } from '@angular/common';
+import { TabViewModule } from 'primeng/tabview';
+import { ButtonModule } from 'primeng/button';
 
 describe('PanelViewComponent', () => {
   let component: PanelViewComponent;
@@ -8,7 +11,7 @@ describe('PanelViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PanelViewComponent]
+      imports: [PanelViewComponent, CommonModule, TabViewModule, ButtonModule]
     })
     .compileComponents();
     
