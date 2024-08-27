@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
@@ -24,12 +24,12 @@ export class TodoListComponent{
       this.todoList = items
     })
   }
+
   showDialog(){
     this.visible = !this.visible
   }
 
   checkFunction(input: HTMLInputElement){
-    console.log(this.isEdit)
     if(!this.isEdit){
       this.addTask(input)
     }else{

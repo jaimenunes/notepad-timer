@@ -1,7 +1,7 @@
 <div class="grid">
     <div class="col-12">
         <p-tabView>
-            <p-tabPanel header="Focus Time">
+            <p-tabPanel header="Focus Time" [disabled]="isRunning && activeTab != 25">
                 <div class="flex justify-content-center">
                     <span class="clock-font">{{displayFocus}}</span>
                 </div>
@@ -14,9 +14,9 @@
                     </button>
                 </div>
             </p-tabPanel>
-            <p-tabPanel header="Short Break">
+            <p-tabPanel header="Short Break" [disabled]="isRunning && activeTab != 5">
                 <div class="flex justify-content-center">
-                    <span class="clock-font">{{displayShort}}</span>
+                    <span class="clock-font">{{timerDisplay ? timerDisplay : displayShort}}</span>
                 </div>
                 <div class="flex justify-content-center">
                     <button *ngIf="!isRunning" pButton pRipple class="p-button-success mr-2" (click)="timer(5, 'short')">
@@ -27,7 +27,7 @@
                     </button>
                 </div>
             </p-tabPanel>
-            <p-tabPanel header="Long Break">
+            <p-tabPanel header="Long Break" [disabled]="isRunning && activeTab != 15">
                 <div class="flex justify-content-center">
                     <span class="clock-font">{{displayLong}}</span>
                 </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TabViewModule } from 'primeng/tabview';
 import { ButtonModule } from 'primeng/button';
@@ -11,17 +11,48 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './panel-view.component.sass'
 })
 
-export class PanelViewComponent {
+export class PanelViewComponent implements OnInit {
   ringAlarm = new Audio('../../assets/ring.mp3')
   public timerInterval: any = null
   displayFocus: string = "25:00"
   displayShort: string = "05:00"
   displayLong: string = "15:00"
+  timerDisplay: string
+
+  activeTab: number
   isRunning: boolean = false
 
+  worker: Worker
+
+  ngOnInit(): void {
+    if(typeof(this.worker) != undefined){
+      if(this.worker){
+        this.worker.terminate()
+      }
+      this.worker = new Worker(new URL('../worker.worker', import.meta.url))
+      
+      this.worker.onmessage = ({data}) => {
+        if(data != 'start' && data != 'end'){
+          if(data.tab == 'short'){
+            this.displayShort = data.time
+          }
+          if(data.tab == 'focus'){
+            this.displayFocus = data.time
+          }
+          if(data.tab == 'long'){
+            this.displayLong = data.time
+          }
+        }
+        if(data === 'finish' ){
+          this.ringAlarm.play()
+        }
+      }
+
+    }
+  }
   public stop(display: string){
+    this.worker.postMessage({message: 'stop', time: null, tabView: null})
     this.isRunning = false
-    clearInterval(this.timerInterval)
     switch(display){
       case 'focus':
         this.displayFocus = `25:00`
@@ -36,41 +67,9 @@ export class PanelViewComponent {
   }
 
   public timer(minute: number, display: string) {
-    let seconds: number = minute * 60;
-    let statSeconds: number = seconds % 60;
     this.isRunning = true;
-    
-    this.timerInterval = setInterval(() => {
-        seconds--;
-        if (statSeconds != 0) {
-            statSeconds--;
-        } else {
-            statSeconds = 59;
-        }
-        
-        let textSeconds = statSeconds < 10 ? '0' + statSeconds : String(statSeconds);
-        const minutes = Math.floor(seconds / 60);
-        const displayMinutes = minutes < 10 ? '0' + minutes : String(minutes);
-        
-        switch(display) {
-            case 'focus':
-                this.displayFocus = `${displayMinutes}:${textSeconds}`;
-                break;
-            case 'short':
-                this.displayShort = `${displayMinutes}:${textSeconds}`;
-                break;
-            case 'long':
-                this.displayLong = `${displayMinutes}:${textSeconds}`;
-                break;
-        }
-        
-        if (seconds == 0) {
-            clearInterval(this.timerInterval);
-            this.ringAlarm.play();
-            this.isRunning = false;
-            this.stop(display)
-            window.alert("The time is over!")
-        }
-    }, 1000);
+    this.activeTab = minute
+    this.worker.postMessage({message: 'start', time: minute, tabView: display})
   }
+
 }
